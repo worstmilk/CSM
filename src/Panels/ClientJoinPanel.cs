@@ -12,7 +12,7 @@ namespace CSM.Panels
     {
         private UILabel _statusLabel;
 
-        private UIProgressBar _progressBar;
+        private UILabel _progress;
 
         private UIButton _cancelButton;
 
@@ -42,8 +42,9 @@ namespace CSM.Panels
             _cancelButton.isVisible = false;
 
             // Transfer progress
-            _progressBar = this.CreateProgressBar(new Vector2(0, 30));
-            _progressBar.maxValue = 100;
+            _progress = this.CreateTitleLabel("0%", new Vector2(0, 0));
+            _progress.position = new Vector3((width / 2f) - _progress.width, -(height / 2f) + 20f);
+            _progress.textAlignment = UIHorizontalAlignment.Center;
         }
 
         public void ShowPanel()
@@ -69,8 +70,9 @@ namespace CSM.Panels
 
         public override void Update()
         {
-            _progressBar.maxValue = SaveHelpers.CurrentMaxProcess;
-            _progressBar.value = SaveHelpers.CurrentProcess;
+            int percent = (int)(SaveHelpers.CurrentMaxProcess / 100f * SaveHelpers.CurrentProcess);
+            percent = Mathf.Clamp(percent, 0, 100);
+            _progress.text = percent + "%";
             base.Update();
         }
 
@@ -96,7 +98,7 @@ namespace CSM.Panels
                         _cancelButton.isVisible = true;
                     }
 
-                    _progressBar.isVisible = true;
+                    _progress.isVisible = IsFirstJoin || IsSelf;
                 });
             }).Start();
         }

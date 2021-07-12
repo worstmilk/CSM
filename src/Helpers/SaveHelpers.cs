@@ -18,7 +18,7 @@ namespace CSM.Helpers
     {
         private const string SYNC_NAME_SERVER = "CSM_SyncSave";
         private const string SYNC_NAME_CLIENT = "CSM_SyncSave_Client";
-        private const int CHUNK_SIZE = 64 * 1024; //64K bytes
+        private const int CHUNK_SIZE = 1 * 1024 * 1024; //1M bytes
         private static object _saveLock = new object();
 
         public static float CurrentProcess { get; private set; }
