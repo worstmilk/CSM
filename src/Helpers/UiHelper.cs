@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.IO;
+using ColossalFramework.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,6 +55,21 @@ namespace CSM.Helpers
             label.textScale = 1.1f;
 
             return label;
+        }
+
+
+        public static UIProgressBar CreateProgressBar(this UIComponent uiComponent, Vector2 position, int width = 340, int height = 30)
+        {
+            UIProgressBar progressBar = (UIProgressBar)uiComponent.Find("ProgressBar", typeof(UIProgressBar));
+            progressBar.atlas = GetAtlas("Ingame");
+            progressBar.position = position;
+            progressBar.progressColor = Color.red;
+            progressBar.width = width;
+            progressBar.height = height;
+            progressBar.isEnabled = true;
+            progressBar.isVisible = true;
+
+            return progressBar;
         }
 
         public static UITextField CreateTextField(this UIComponent uiComponent, string placeholderText,

@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using CSM.Helpers;
 using CSM.Networking;
+using System;
 using System.Threading;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace CSM.Panels
     public class ClientJoinPanel : UIPanel
     {
         private UILabel _statusLabel;
+
+        private UIProgressBar _progressBar;
 
         private UIButton _cancelButton;
 
@@ -37,11 +40,15 @@ namespace CSM.Panels
             _cancelButton = this.CreateButton("Cancel", new Vector2((Screen.width / 2f) - 170f, -(Screen.height / 2f) - 60f));
             _cancelButton.eventClick += OnCancelButtonClick;
             _cancelButton.isVisible = false;
+
+            // Transfer progress
+            _progressBar = this.CreateProgressBar(new Vector2(0, 30));
+            _progressBar.maxValue = 100;
         }
 
         public void ShowPanel()
         {
-            UpdateText();
+            UpdateJoinPanel();
             isVisible = true;
             Focus();
         }
@@ -60,7 +67,14 @@ namespace CSM.Panels
             HidePanel(true);
         }
 
-        private void UpdateText()
+        public override void Update()
+        {
+            _progressBar.maxValue = SaveHelpers.CurrentMaxProcess;
+            _progressBar.value = SaveHelpers.CurrentProcess;
+            base.Update();
+        }
+
+        private void UpdateJoinPanel()
         {
             new Thread(() =>
             {
@@ -81,6 +95,8 @@ namespace CSM.Panels
                     {
                         _cancelButton.isVisible = true;
                     }
+
+                    _progressBar.isVisible = true;
                 });
             }).Start();
         }

@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using CSM.Networking;
+using NLog;
 using NLog.Config;
 using NLog.Targets;
 using System;
@@ -15,7 +16,7 @@ namespace CSM.Util
             LoggingConfiguration config = new LoggingConfiguration();
 
             // The layout of the log
-            string layout = "[${time}] [" + Assembly.GetAssembly(typeof(CSM)).GetName().Version + "] [${level}] ${message} ${exception:format=tostring}";
+            string layout = "[${time}] [" + Assembly.GetAssembly(typeof(CSM)).GetName().Version + "] [" + MultiplayerManager.Instance.CurrentRole.ToString() + "] [${level}] ${message} ${exception:format=tostring}";
 
             // Target for file logging
             FileTarget logfile = new FileTarget("logfile")
@@ -24,6 +25,8 @@ namespace CSM.Util
                 ArchiveFileName = "multiplayer-logs/log-${shortdate}.txt",
                 Layout = layout,
                 ArchiveEvery = FileArchivePeriod.Day,
+                AutoFlush = true,
+                ArchiveOldFileOnStartup = true,
                 MaxArchiveFiles = 7,
                 ConcurrentWrites = true,
             };

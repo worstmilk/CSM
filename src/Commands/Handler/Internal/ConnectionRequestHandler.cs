@@ -185,10 +185,17 @@ namespace CSM.Commands.Handler.Internal
                     Thread.Sleep(10);
                 }
 
-                Command.SendToClient(newPlayer, new WorldTransferCommand
+                var chunkCount = SaveHelpers.GetWorldChunkCount();
+                for(int i = 0; i < chunkCount; i++)
                 {
-                    World = SaveHelpers.GetWorldFile()
-                });
+                    var chunk = SaveHelpers.GetWorldChunk(i);
+                    Command.SendToClient(newPlayer, new WorldTransferCommand
+                    {
+                        Index = i,
+                        Count = chunkCount,
+                        Chunk = chunk
+                    });
+                }
 
                 newPlayer.Status = ClientStatus.Loading;
             }).Start();

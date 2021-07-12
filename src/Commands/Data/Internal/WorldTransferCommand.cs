@@ -3,17 +3,24 @@
 namespace CSM.Commands.Data.Internal
 {
     /// <summary>
-    ///     This commands transfers the save game.
+    ///     This commands transfers a chunk of the save game.
     /// </summary>
     /// Sent by:
     /// - ConnectionRequestHandler
     [ProtoContract]
     public class WorldTransferCommand : CommandBase
     {
-        /// <summary>
-        ///     The serialized save game.
-        /// </summary>
+
         [ProtoMember(1)]
-        public byte[] World { get; set; }
+        public int Index { get; set; }
+
+        [ProtoMember(2)]
+        public int Count { get; set; }
+
+        /// <summary>
+        ///     The serialized save game chunk.
+        /// </summary>
+        [ProtoMember(3)]
+        public byte[] Chunk { get; set; }
     }
 }
