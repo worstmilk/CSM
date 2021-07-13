@@ -13,7 +13,8 @@ namespace CSM.Injections
         // All the types for Array16<T> and Array32<T> we currently need to track
         private static readonly Type[] _array16Types = {
             typeof(Building), typeof(NetNode), typeof(NetSegment),
-            typeof(PropInstance), typeof(TransportLine), typeof(ZoneBlock)
+            typeof(PropInstance), typeof(TransportLine), typeof(ZoneBlock),
+            typeof(Vehicle)
         };
 
         private static readonly Type[] _array32Types = { typeof(TreeInstance) };

@@ -1,4 +1,5 @@
 ﻿using CSM.Commands.Data.Buildings;
+using CSM.Commands.Data.Vehicles;
 using CSM.Helpers;
 
 namespace CSM.Commands.Handler.Buildings
